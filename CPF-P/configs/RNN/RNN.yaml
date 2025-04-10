@@ -1,0 +1,67 @@
+# Basic Config
+seed: 2021  # Seed for reproducibility
+do_train: 1  # Enable training
+task_id: 'test'  # Task identifier for the experiment
+model: 'RNN'  # Model type (Recurrent Neural Network)
+
+# Data Loader
+data: 'ETTm1'  # Dataset identifier (ETTm1 for multivariate time-series)
+root_path: './data/ETT/'  # Root directory for dataset storage
+data_path: 'ETTh1.csv'  # Dataset file path
+features: 'M'  # Use multivariate features for forecasting
+target: 'OT'  # Target variable to predict
+freq: 'h'  # Data frequency (hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 96  # Length of the input sequence (previous observations)
+label_len: 48  # Length of the label sequence for prediction
+pred_len: 96  # Length of the prediction horizon (future steps)
+
+# Model Define
+# Hidden Layer Config
+hidden_layer_size: 100  # Size of the hidden layers in RNN
+num_layers: 1  # Number of layers in the RNN
+
+# Input and Output Config
+enc_in: 7  # Number of input features for the encoder
+dec_in: 7  # Number of input features for the decoder
+c_out: 7  # Number of output features (forecasted variables)
+
+# Additional Model Parameters (Relevant for Transformer Models, but set here)
+d_model: 512  # Dimensionality of model hidden layers (for transformer modules)
+n_heads: 8  # Number of attention heads (for transformer)
+e_layers: 2  # Number of encoder layers (for transformer)
+d_layers: 1  # Number of decoder layers (for transformer)
+d_ff: 2048  # Dimensionality of feed-forward network
+moving_avg: 25  # Moving average window size
+factor: 1  # Scaling factor for time-series
+distil: True  # Use distillation for model compression (if applicable)
+dropout: 0.05  # Dropout rate for regularization
+embed: 'timeF'  # Time embedding
+activation: 'gelu'  # Activation function
+output_attention: False  # Disable output of attention weights
+
+# Prediction Settings
+do_predict: True  # Enable prediction mode
+
+# Optimization Settings
+num_workers: 10  # Number of workers for data loading
+itr: 1  # Number of iterations (or trials)
+train_epochs: 10  # Number of training epochs
+batch_size: 32  # Batch size for training
+patience: 3  # Early stopping patience
+learning_rate: 0.0001  # Learning rate for optimizer
+des: 'test'  # Description for the experiment
+loss: 'mse'  # Loss function (Mean Squared Error)
+lradj: 'type1'  # Learning rate adjustment strategy
+use_amp: False  # Disable Automatic Mixed Precision (AMP)
+
+# GPU Settings
+use_gpu: True  # Enable GPU for training
+gpu: 0  # ID of the GPU to use
+use_multi_gpu: False  # Disable multi-GPU usage
+devices: '0,1,2,3'  # List of available GPU devices
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

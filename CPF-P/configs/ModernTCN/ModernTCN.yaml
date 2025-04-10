@@ -1,0 +1,95 @@
+# Experiment Config
+
+# Random Seed
+seed: 2021  # Seed for reproducibility
+
+# Basic Config
+do_train: True  # Flag to enable training
+model_id: 'test'  # Identifier for the experiment/model
+model: 'ModernTCN'  # Model type (Temporal Convolutional Network)
+
+# DataLoader Config
+data: 'ETTm1'  # Dataset identifier (ETTm1 for multivariate data)
+root_path: './data/ETT/'  # Root directory for the dataset
+data_path: 'ETTh1.csv'  # Path to the dataset file
+features: 'M'  # Multivariate features (multiple variables)
+target: 'OT'  # Target variable to predict (OT in this case)
+freq: 'h'  # Frequency of data ('h' for hourly data)
+checkpoints: './checkpoints/'  # Directory for saving model checkpoints
+embed: 'timeF'  # Time feature embedding
+
+# Forecasting Task
+seq_len: 96  # Input sequence length (history length)
+pred_len: 96  # Prediction length (forecast horizon)
+
+# ModernTCN Specific Parameters
+stem_ratio: 6  # Ratio for the initial stem layers
+downsample_ratio: 2  # Downsampling ratio for pooling layers
+ffn_ratio: 2  # Feed-forward network expansion ratio
+patch_size: 8  # Patch size for local convolutions
+patch_stride: 4  # Stride size for patch extraction
+num_blocks: [1]  # Number of blocks in each ModernTCN layer
+large_size: [51]  # Large kernel size
+small_size: [5]  # Small kernel size
+dims: [64, 64, 64, 64]  # Dimensions of each layer
+dw_dims: [256, 256, 256, 256]  # Depth-wise convolutional dimensions
+small_kernel_merged: False  # Disable merging of small kernels
+call_structural_reparam: False  # Disable structural reparameterization
+use_multi_scale: False  # Disable multi-scale feature extraction
+
+# PatchTST Parameters
+fc_dropout: 0.05  # Dropout rate in fully connected layers
+head_dropout: 0.0  # Dropout rate in attention heads
+patch_len: 16  # Patch length for PatchTST
+stride: 8  # Stride size for PatchTST patches
+padding_patch: 'end'  # Padding at the end of sequences
+
+# Preprocessing
+revin: 1  # Reversible instance normalization enabled
+affine: 0  # Disable affine transformations in normalization
+subtract_last: 0  # Do not subtract the last value
+decomposition: 0  # No time-series decomposition applied
+kernel_size: 25  # Kernel size for convolution layers
+individual: 0  # Disable individual normalization per series
+
+# Transformer/Former Config
+embed_type: 0  # Embedding type (0 for time-based embeddings)
+enc_in: 7  # Encoder input size (number of variables)
+dec_in: 7  # Decoder input size
+c_out: 7  # Number of output variables
+d_model: 512  # Dimensionality of the model
+n_heads: 8  # Number of attention heads
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Feed-forward network dimensionality
+moving_avg: 25  # Moving average window size
+factor: 1  # Factor for time-series scaling
+distil: true  # Enable distillation to reduce model size
+dropout: 0.05  # Dropout rate for regularization
+activation: 'gelu'  # GELU activation function
+output_attention: true  # Output attention weights for inspection
+do_predict: true  # Enable prediction mode
+
+# Optimization Settings
+num_workers: 10  # Number of workers for data loading
+itr: 1  # Number of iterations for training
+train_epochs: 100  # Total epochs for training
+batch_size: 128  # Batch size for training
+patience: 100  # Early stopping patience
+learning_rate: 0.0001  # Learning rate for optimization
+des: test  # Description of the experiment
+loss: mse  # Loss function (Mean Squared Error)
+lradj: type3  # Learning rate adjustment strategy
+pct_start: 0.3  # Percentage of total training for initial LR ramp-up
+use_amp: false  # Disable automatic mixed precision (AMP)
+
+# GPU Config
+use_gpu: true  # Enable GPU usage
+gpu: 0  # GPU device ID to use
+use_multi_gpu: false  # Disable multi-GPU training
+devices: '0,1,2,3'  # List of GPU devices available (if multi-GPU is enabled)
+
+# Additional Config
+test_flop: false  # Disable FLOP testing for efficiency
+pre_process: ['RIN', 'BN']  # Preprocessing steps (RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # Postprocessing steps applied after model output (RIN)

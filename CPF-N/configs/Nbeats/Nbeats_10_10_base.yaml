@@ -1,0 +1,66 @@
+# Basic Config
+seed: 2024
+do_train: 1
+task_id: 'test'
+model: Nbeats
+
+# Data Loader
+data: 'ETTm1'
+root_path: './data/ETT/'
+data_path: 'ETTh1.csv'
+features: 'M'
+target: 'OT'
+freq: 'h'
+checkpoints: './checkpoints/'
+
+# Forecasting Task
+seq_len: 14
+label_len: 0
+pred_len: 14
+
+# Model Define
+# Hidden Layer Config
+stack_types: ["trend", "seasonality", "trend"] # Types of stacks
+nb_blocks_per_stack: 12 # Number of blocks per stack
+thetas_dim: [4, 8, 4] # Thetas dimensions for each stack
+share_weights_in_stack: False # Whether to share weights in stack
+hidden_layer_units: 512 # Number of hidden layer units
+enc_in: 7
+dec_in: 7
+c_out: 7
+d_model: 64
+n_heads: 8
+e_layers: 2
+d_layers: 1
+d_ff: 2048
+moving_avg: 25
+factor: 1
+distil: True
+dropout: 0.05
+embed: 'timeF'
+activation: 'gelu'
+output_attention: False
+do_predict: True
+
+# Optimization
+num_workers: 10
+itr: 1
+train_epochs: 20
+batch_size: 32
+patience: 2
+learning_rate: 0.0001
+des: 'test'
+loss: 'mse'
+lradj: 'type1'
+use_amp: False
+
+# GPU
+use_gpu: True
+gpu: 0
+use_multi_gpu: False
+devices: '0,1,2,3'
+
+#changePoints
+max_changePoints: 1
+delay: 1
+maskFuture: True

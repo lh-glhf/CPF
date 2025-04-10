@@ -1,0 +1,58 @@
+---
+do_train: True  # Flag to indicate whether to train the model (True: train, False: do not train)
+model_id: 'test'  # Identifier for the specific model/experiment
+model: 'Autoformer'  # Model type to be used, here it is Autoformer (a time-series forecasting model)
+seed: 2021  # Random seed for reproducibility
+
+# Data Loader
+data: 'ETTh1'  # Dataset name used for the experiment
+root_path: './mindseq/data/ETT/'  # Root directory for the dataset
+data_path: 'ETTh1.csv'  # Name of the CSV data file
+features: 'M'  # Type of features ('M' indicates multivariate)
+target: 'OT'  # Target variable for prediction
+freq: 'h'  # Frequency of the data (e.g., 'h' for hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 96  # Length of the input sequence for training
+label_len: 96  # Length of the labeled sequence for guiding the forecast
+pred_len: 168  # Length of the forecast output sequence
+
+# Autoformer Model Config
+bucket_size: 4  # Size of the bucket for hashing-based attention mechanism
+n_hashes: 4  # Number of hash rounds used in hashing-based attention
+
+# Model Define
+enc_in: 7  # Number of input variables for the encoder
+dec_in: 7  # Number of input variables for the decoder
+c_out: 7  # Number of output variables for forecasting
+d_model: 512  # Dimension of the model representation
+n_heads: 8  # Number of attention heads in the encoder
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Dimension of the feedforward network
+moving_avg: 25  # Moving average window size for trend extraction
+factor: 1  # Factor that controls the prediction length adjustment
+distil: True  # Flag to apply distillation for model efficiency
+dropout: 0.05  # Dropout rate for regularization
+embed: 'timeF'  # Type of embedding ('timeF' indicates time feature embedding)
+activation: 'gelu'  # Activation function (GELU: Gaussian Error Linear Unit)
+output_attention: False  # Whether to output attention weights for interpretability
+
+# Optimization
+num_workers: 10  # Number of workers for data loading
+itr: 1  # Number of iterations for the experiment
+train_epochs: 10  # Number of training epochs
+batch_size: 32  # Batch size for training
+patience: 3  # Early stopping patience (number of epochs without improvement)
+learning_rate: 0.0001  # Learning rate for the optimizer
+des: 'test'  # Description of the experiment
+loss: 'mse'  # Loss function (MSE: Mean Squared Error)
+lradj: 'type1'  # Strategy for learning rate adjustment
+use_amp: False  # Flag to enable Automatic Mixed Precision (AMP) training
+
+# Hardware and Processing
+device: "GPU"  # Device type used for training ('GPU' for graphical processing unit)
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

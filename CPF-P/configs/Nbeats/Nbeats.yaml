@@ -1,0 +1,70 @@
+# Basic Config
+seed: 2021  # Random seed for reproducibility
+do_train: 1  # Enable training
+task_id: 'test'  # Experiment task identifier
+model: 'Nbeats'
+
+# Data Loader Configuration
+data: 'ETTm1'  # Dataset identifier (ETTm1 for multivariate time series)
+root_path: './data/ETT/'  # Root directory for dataset storage
+data_path: 'ETTh1.csv'  # File path for the dataset
+features: 'M'  # Use multivariate features
+target: 'OT'  # Target variable to forecast
+freq: 'h'  # Data frequency ('h' for hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 96  # Length of the input sequence (past observations)
+label_len: 48  # Length of the observed sequence to consider for prediction
+pred_len: 96  # Forecast horizon (length of prediction)
+
+# Model Definition
+# Hidden Layer Configuration
+stack_types: ["generic", "generic"]  # Types of stacks used
+nb_blocks_per_stack: 2  # Number of blocks in each stack
+thetas_dim: [4, 4]  # Dimensions of the theta parameters for each stack
+share_weights_in_stack: true  # Share weights across blocks in a stack
+hidden_layer_units: 64  # Number of units in hidden layers
+
+# Input and Output Sizes
+enc_in: 7  # Number of input features for the encoder
+dec_in: 7  # Number of input features for the decoder
+c_out: 7  # Number of output features (predicted variables)
+
+# Transformer-like Parameters (if used)
+d_model: 512  # Dimensionality of model (for compatible modules)
+n_heads: 8  # Number of attention heads
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Feed-forward network dimensionality
+moving_avg: 25  # Moving average window for smoothing (if applicable)
+factor: 1  # Scaling factor for time-series
+distil: True  # Enable distillation for model compression
+dropout: 0.05  # Dropout rate for regularization
+embed: 'timeF'  # Type of time-based embedding
+activation: 'gelu'  # Activation function
+output_attention: False  # Disable output attention
+
+# Prediction Settings
+do_predict: True  # Enable model prediction mode
+
+# Optimization Settings
+num_workers: 10  # Number of worker threads for data loading
+itr: 1  # Number of iterations (or trials) for training
+train_epochs: 10  # Number of training epochs
+batch_size: 32  # Batch size for training
+patience: 3  # Early stopping patience
+learning_rate: 0.0001  # Learning rate for optimization
+des: 'test'  # Description of the experiment
+loss: 'mse'  # Loss function (Mean Squared Error)
+lradj: 'type1'  # Learning rate adjustment strategy
+use_amp: False  # Disable automatic mixed precision (AMP)
+
+# GPU Configuration
+use_gpu: True  # Enable GPU for training
+gpu: 0  # Specify GPU ID to use
+use_multi_gpu: False  # Disable multi-GPU training
+devices: '0,1,2,3'  # List of available GPUs (if multi-GPU were enabled)
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

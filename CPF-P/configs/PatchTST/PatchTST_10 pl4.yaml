@@ -1,0 +1,80 @@
+# Random Seed
+seed: 2024  # Seed for reproducibility
+
+# Basic Config
+do_train: True  # Enable training
+model_id: 'test'  # Identifier for the model/experiment
+model: 'PatchTST'  # Model type (Patch Time-Series Transformer)
+
+# Data Loader Configuration
+data: 'custom'  # Custom dataset identifier
+root_path: './data/ETT/'  # Root directory for dataset storage
+data_path: 'ETTh1.csv'  # Dataset file path
+features: 'M'  # Use multivariate features for forecasting
+target: 'OT'  # Target variable to predict
+freq: 'h'  # Data frequency (hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task Configuration
+seq_len: 10  # Length of the input sequence (previous observations)
+label_len: 0  # Length of the label sequence for prediction
+pred_len: 10 # Length of the prediction horizon (future steps)
+
+# DLinear and PatchTST Specific Parameters
+fc_dropout: 0.05  # Dropout rate for fully connected layers
+head_dropout: 0.0  # Dropout for the head of the model
+patch_len: 4  # Length of each patch (sub-sequence)
+stride: 1  # Stride size for patch extraction
+padding_patch: 'end'  # Padding strategy for patches
+revin: 1  # Enable RevIN (Reversible Instance Normalization)
+affine: 0  # Disable affine transformation in RevIN
+subtract_last: 0  # Do not subtract the last observed value
+decomposition: 0  # Disable series decomposition
+kernel_size: 25  # Kernel size for convolutional layers
+individual: 0  # Use shared weights across series
+
+# Transformer and Formers Parameters
+embed_type: 0  # Embedding type (0: no embedding)
+enc_in: 7  # Number of input features for encoder
+dec_in: 7  # Number of input features for decoder
+c_out: 7  # Number of output features (forecasted variables)
+d_model: 512  # Dimensionality of model hidden layers
+n_heads: 8  # Number of attention heads
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Dimensionality of feed-forward network
+moving_avg: 25  # Moving average window size
+factor: 1  # Scaling factor for time-series
+distil: True  # Use distillation for model compression
+dropout: 0.05  # Dropout rate for regularization
+embed: 'timeF'  # Type of time embedding
+activation: 'gelu'  # Activation function
+output_attention: False  # Disable output of attention weights
+
+# Prediction Settings
+do_predict: False  # Do not enable prediction mode
+
+# Optimization Settings
+num_workers: 10  # Number of workers for data loading
+itr: 1  # Number of iterations (or trials)
+train_epochs: 20  # Number of training epochs
+batch_size: 32  # Batch size for training
+patience: 6  # Early stopping patience
+learning_rate: 0.00009  # Learning rate for optimizer
+des: 'benchmark'  # Description of the experiment
+loss: 'mse'  # Loss function (Mean Squared Error)
+lradj: 'type2'  # Learning rate adjustment strategy
+pct_start: 0.3  # Percentage of training steps to increase the learning rate
+use_amp: False  # Disable Automatic Mixed Precision (AMP)
+
+# GPU Settings
+use_gpu: True  # Enable GPU for training
+gpu: 0  # ID of the GPU to use
+use_multi_gpu: False  # Disable multi-GPU usage
+devices: '0,1,2,3'  # List of available GPU devices
+
+# Additional Settings
+test_flop: False  # Disable FLOP (floating point operations) testing
+
+pre_process: []  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: []  # List of postprocessing techniques applied after model output (e.g., RIN)

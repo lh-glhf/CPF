@@ -1,0 +1,105 @@
+# Random Seed
+seed: 2021  # Seed for reproducibility
+
+# Task Config
+task_name: 'long_term_forecast'  # Name of the task for identification
+do_train: 1  # Enable training mode
+model_id: 'test'  # Identifier for the model/experiment
+model: 'TimesNet'  # Model type (TimesNet)
+
+# Data Loader
+data: 'ETTm1'  # Dataset identifier (ETTm1 for multivariate time-series)
+root_path: './data/ETT/'  # Root directory for dataset storage
+data_path: 'ETTh1.csv'  # Path to the dataset file
+features: 'M'  # Multivariate forecasting setting
+target: 'OT'  # Target variable to predict
+freq: 'h'  # Data frequency (hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 96  # Input sequence length (past observations)
+label_len: 48  # Label sequence length for training
+pred_len: 96  # Prediction length (future steps)
+seasonal_patterns: 'Monthly'  # Seasonal pattern setting for the model
+inverse: False  # Do not inverse normalization of outputs
+
+# Imputation Task
+mask_rate: 0.25  # Proportion of data to mask for imputation
+
+# Anomaly Detection Task
+anomaly_ratio: 0.25  # Ratio of anomalies for detection tasks
+
+# Model Define
+expand: 2  # Expansion factor in the model architecture
+d_conv: 4  # Convolutional dimension
+top_k: 5  # Top-k selection for model layers
+num_kernels: 6  # Number of kernels for convolution layers
+enc_in: 7  # Number of input features for encoder
+dec_in: 7  # Number of input features for decoder
+c_out: 7  # Number of output channels (forecasted variables)
+d_model: 32  # Model hidden dimension
+n_heads: 8  # Number of attention heads (if applicable)
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Feed-forward network dimension
+moving_avg: 25  # Moving average window for trend extraction
+factor: 1  # Scaling factor for time-series
+distil: False  # Disable distillation
+dropout: 0.1  # Dropout rate for regularization
+embed: 'timeF'  # Type of time embedding
+activation: 'gelu'  # Activation function
+output_attention: False  # Do not output attention weights
+channel_independence: 1  # Channel independence for model layers
+decomp_method: 'moving_avg'  # Method for decomposition of time-series
+use_norm: 1  # Enable normalization layers
+down_sampling_layers: 0  # Number of down-sampling layers
+down_sampling_window: 1  # Down-sampling window size
+down_sampling_method: None  # Method for down-sampling (not specified)
+seg_len: 48  # Segment length for processing
+
+# Optimization
+num_workers: 10  # Number of workers for data loading
+itr: 1  # Number of iterations (or trials)
+train_epochs: 10  # Number of training epochs
+batch_size: 32  # Training batch size
+patience: 3  # Early stopping patience
+learning_rate: 0.0001  # Learning rate
+des: 'test'  # Description of the experiment
+loss: 'MSE'  # Loss function (Mean Squared Error)
+lradj: 'type1'  # Learning rate adjustment strategy
+use_amp: False  # Disable Automatic Mixed Precision (AMP)
+
+# GPU Settings
+use_gpu: True  # Enable GPU for training
+gpu: 0  # Specify GPU ID for training
+use_multi_gpu: False  # Disable multi-GPU usage
+devices: '0,1,2,3'  # List of GPU devices available
+
+# De-stationary Projector
+p_hidden_dims: [128, 128]  # Hidden dimensions for projector network
+p_hidden_layers: 2  # Number of hidden layers in projector network
+
+# Metrics (Dynamic Time Warping - DTW)
+use_dtw: False  # Disable DTW for evaluation
+
+# Augmentation
+augmentation_ratio: 0  # No data augmentation
+jitter: False  # Disable jitter augmentation
+scaling: False  # Disable scaling augmentation
+permutation: False  # Disable permutation augmentation
+randompermutation: False  # Disable random permutation augmentation
+magwarp: False  # Disable magnitude warping augmentation
+timewarp: False  # Disable time warping augmentation
+windowslice: False  # Disable window slicing augmentation
+windowwarp: False  # Disable window warping augmentation
+rotation: False  # Disable rotation augmentation
+spawner: False  # Disable spawner augmentation
+dtwwarp: False  # Disable DTW warp augmentation
+shapedtwwarp: False  # Disable shape DTW warp augmentation
+wdba: False  # Disable WD-Barycenter averaging
+discdtw: False  # Disable discriminative DTW
+discsdtw: False  # Disable discriminative shape DTW
+extra_tag: ''  # Extra tags for identification
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

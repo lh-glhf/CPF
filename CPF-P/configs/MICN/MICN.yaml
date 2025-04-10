@@ -1,0 +1,66 @@
+# Experiment Config
+
+# Random Seed
+seed: 2021  # Ensures reproducibility
+
+# Basic Config
+do_train: True  # Flag to indicate if training is enabled
+model_id: 'test'  # Identifier for the experiment or model instance
+model: 'MICN'  # Model type, here it is MICN (possibly a type of convolutional network)
+mode: 'regre'  # Mode of the model (regression task)
+data: 'ETTh1'  # Dataset identifier
+root_path: './data/ETT/'  # Root directory for dataset
+data_path: 'ETTh1.csv'  # Path to the specific dataset file
+features: 'M'  # Type of features ('M' for multivariate)
+target: 'OT'  # Target variable to be predicted
+freq: 't'  # Data frequency (e.g., 't' for minute-level frequency)
+checkpoints: './checkpoints/'  # Directory for saving model checkpoints
+
+# MICN Specific Configurations
+conv_kernel: [12, 16]  # Kernel sizes for convolutional layers
+decomp_kernel: [17, 49]  # Decomposition kernel sizes
+isometric_kernel: [17, 49]  # Isometric kernel sizes for specific transformations
+
+# Forecasting Task
+seq_len: 96  # Input sequence length (must match label_len)
+label_len: 96  # Label length to guide forecasting (equal to seq_len for this model)
+pred_len: 336  # Prediction length, larger than input sequence
+
+# Model Parameters
+enc_in: 7  # Number of input variables for the encoder
+dec_in: 7  # Number of input variables for the decoder
+c_out: 7  # Number of output variables for forecasting
+d_model: 512  # Model dimension for internal representations
+n_heads: 8  # Number of attention heads (if using attention)
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Dimension of feedforward layers
+padding: 0  # Padding setting for input sequences
+dropout: 0.05  # Dropout rate to prevent overfitting
+embed: 'timeF'  # Time feature embedding
+activation: 'gelu'  # Activation function (Gaussian Error Linear Unit)
+output_attention: False  # Disable output of attention weights
+do_predict: True  # Enable prediction after training
+cols: []  # Specify columns to be used (empty for all)
+
+# Optimization
+num_workers: 0  # Number of data loading workers (0 for single-threaded)
+itr: 1  # Number of training iterations
+train_epochs: 15  # Number of epochs for training
+batch_size: 32  # Batch size during training
+patience: 3  # Early stopping patience
+learning_rate: 0.001  # Initial learning rate for optimizer
+des: 'test'  # Description of the experiment
+loss: 'mse'  # Loss function (Mean Squared Error for regression)
+lradj: 'type1'  # Strategy for adjusting learning rate
+use_amp: False  # Disable Automatic Mixed Precision (AMP) training
+inverse: False  # No inversion of predictions to original scale
+
+# GPU Configuration
+use_gpu: True  # Enable GPU usage
+gpu: 0  # GPU device ID to use
+use_multi_gpu: False  # Disable multi-GPU support
+devices: '0,1,2,3'  # List of available GPUs (if multi-GPU enabled)
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

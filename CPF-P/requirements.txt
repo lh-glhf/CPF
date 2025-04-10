@@ -1,0 +1,17 @@
+pandas
+scikit-learn
+torchvision==0.19.1
+numpy
+matplotlib
+reformer_pytorch==1.4.4
+ptflops
+PyYAML
+patool
+nltk
+statsmodels
+sktime
+tensorboard
+fastdtw
+gluonts
+timm
+ujson

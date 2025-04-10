@@ -1,0 +1,61 @@
+# Basic Config
+seed: 2021  # Random seed for reproducibility
+do_train: 1  # Flag to indicate whether to train the model (1=True)
+task_id: 'test'  # Identifier for the specific task or experiment
+model: 'LSTM'  # Model type, here it is LSTM
+
+# Data Loader
+data: 'ETTm1'  # Name of the dataset used for training
+root_path: './data/ETT/'  # Root directory where the dataset is stored
+data_path: 'ETTh1.csv'  # Path to the CSV data file
+features: 'M'  # Type of features ('M' for multivariate)
+target: 'OT'  # Target variable to be predicted
+freq: 'h'  # Frequency of the data (e.g., 'h' for hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 96  # Length of the input sequence for training
+label_len: 48  # Length of the labeled sequence for guiding the forecast
+pred_len: 96  # Length of the forecast output sequence
+
+# Model Define
+hidden_layer_size: 100  # Number of units in each hidden layer of the LSTM
+num_layers: 1  # Number of stacked LSTM layers
+enc_in: 7  # Number of input variables for the encoder
+dec_in: 7  # Number of input variables for the decoder
+c_out: 7  # Number of output variables for forecasting
+d_model: 512  # Dimension of the model representation (not used directly in LSTM but relevant if combining with other models)
+n_heads: 8  # Number of attention heads (may be unused for vanilla LSTM)
+e_layers: 2  # Number of encoder layers (if combining with attention modules)
+d_layers: 1  # Number of decoder layers (if combining with attention modules)
+d_ff: 2048  # Dimension of the feedforward network (relevant if hybrid model)
+moving_avg: 25  # Moving average window size for trend extraction (optional preprocessing step)
+factor: 1  # Factor controlling prediction adjustment (if applicable)
+distil: True  # Enable distillation to reduce model size (if applicable)
+dropout: 0.05  # Dropout rate for regularization
+embed: 'timeF'  # Type of embedding ('timeF' indicates time feature embedding)
+activation: 'gelu'  # Activation function (GELU: Gaussian Error Linear Unit)
+output_attention: False  # Disable outputting attention weights
+do_predict: True  # Enable prediction after training
+
+# Optimization
+num_workers: 10  # Number of workers for loading the data
+itr: 1  # Number of training iterations (repeats)
+train_epochs: 10  # Number of epochs for training
+batch_size: 32  # Batch size used during training
+patience: 3  # Early stopping patience (number of epochs without improvement)
+learning_rate: 0.0001  # Learning rate for the optimizer
+des: 'test'  # Description of the experiment
+loss: 'mse'  # Loss function (MSE: Mean Squared Error)
+lradj: 'type1'  # Strategy for adjusting the learning rate during training
+use_amp: False  # Disable Automatic Mixed Precision (AMP) training
+
+# GPU
+use_gpu: True  # Enable GPU usage
+gpu: 0  # GPU device ID to be used for training
+use_multi_gpu: False  # Disable multi-GPU training
+devices: '0,1,2,3'  # List of available devices (multi-GPU disabled)
+
+# Preprocessing & Postprocessing
+pre_process: ['RIN', 'BN']  # Preprocessing techniques (RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # Postprocessing techniques applied after model output (RIN)

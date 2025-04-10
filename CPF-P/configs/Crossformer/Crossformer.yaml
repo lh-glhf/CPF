@@ -1,0 +1,50 @@
+# Basic
+do_train: True  # Flag to indicate whether to train the model (True: train, False: do not train)
+task_id: test  # Identifier for the specific task or experiment
+model: Crossformer  # Model type, here it is Crossformer (a model for time-series forecasting)
+seed: 2021  # Random seed for reproducibility
+
+# Data
+data: 'ETTh1'  # Name of the dataset used for training
+root_path: './dataset/'  # Root directory where the dataset is stored
+data_path: 'ETTh1.csv'  # Path to the CSV data file
+data_split: '0.7,0.1,0.2'  # Data split ratio (train, validation, test) as percentages
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# MTS Lengths (Multivariate Time Series)
+in_len: 96  # Length of the input sequence used for training
+out_len: 24  # Length of the predicted output sequence
+seg_len: 6  # Segment length for splitting the input sequence
+win_size: 2  # Window size used in segment-based processing
+
+# TSA Configuration (Temporal-Spectral Attention)
+factor: 10  # Scaling factor for the temporal-spectral attention mechanism
+data_dim: 7  # Dimensionality of the input data (number of features)
+d_model: 256  # Dimension of the model representation
+d_ff: 512  # Dimension of the feedforward network
+n_heads: 4  # Number of attention heads
+e_layers: 3  # Number of encoder layers in the model
+dropout: 0.2  # Dropout rate for regularization
+baseline: False  # Whether to use a baseline model (False: no, True: yes)
+
+# Data Loader
+num_workers: 0  # Number of workers for loading the data (0 means no parallel loading)
+batch_size: 32  # Batch size used during training
+
+# Training
+train_epochs: 20  # Number of epochs for training
+patience: 3  # Early stopping patience (number of epochs without improvement)
+learning_rate: 1e-4  # Learning rate for the optimizer
+lradj: 'type1'  # Strategy for adjusting the learning rate during training
+itr: 1  # Number of training iterations (repeats)
+save_pred: False  # Whether to save predictions (False: do not save, True: save)
+
+# GPU
+use_gpu: True  # Flag to indicate whether to use GPU for training
+gpu: 0  # ID of the GPU to be used for training
+use_multi_gpu: False  # Flag to indicate whether to use multiple GPUs
+devices: '0,1,2,3'  # List of GPU device IDs available for multi-GPU training
+
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

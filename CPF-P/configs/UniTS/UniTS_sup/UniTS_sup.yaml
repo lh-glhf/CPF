@@ -1,0 +1,70 @@
+# UniTS supervised training configuration
+# Random Seed
+seed: 2021  # Seed for reproducibility
+
+# basic config
+task_name: "ALL_task"          # Task name
+do_train: 1                 # Training status; 1 for training mode, 0 for testing mode
+model_id: "test"               # Model ID
+model: "UniTS_sup"                 # Model name
+
+# data loader
+data: "All"                    # Dataset type
+features: "M"                  # Forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate
+target: "OT"                   # Target feature in S or MS task
+freq: "h"                      # Frequency for time feature encoding, options:[s: second, t: minute, h: hour, d: day, b: business day, w: week, m: month]; supports detailed frequencies like 15min or 3h
+task_data_config_path: "./configs/UniTS/multi_task.yaml" # Path to task and data configuration YAML file
+subsample_pct: null            # Subsample percentage (optional)
+
+# Distributed Data Parallel (DDP) settings
+local-rank: null               # Local rank for distributed training
+dist_url: "env://"             # URL for setting up distributed training; see PyTorch documentation for details
+num_workers: 0                 # Number of workers for data loading
+memory_check: true             # Enable memory check
+large_model: true              # Use large model
+
+# optimization settings
+itr: 1                         # Number of experiment iterations
+train_epochs: 0               # Number of training epochs
+prompt_tune_epoch: 2           # Number of epochs for prompt tuning
+warmup_epochs: 0               # Number of warmup epochs
+batch_size: 32                 # Batch size of training input data
+acc_it: 32                      # Accumulated iteration to increase effective batch size
+learning_rate: 0.001          # Learning rate for the optimizer
+min_lr: null                   # Minimum learning rate for the optimizer
+weight_decay: 0.0              # Weight decay for the optimizer
+layer_decay: null              # Layer-wise decay for the optimizer
+des: "Exp"                    # Experiment description
+lradj: "prompt_tuning"            # Learning rate adjustment strategy
+clip_grad: 100                # Gradient clipping threshold (default: no clipping)
+dropout: 0.1                   # Dropout probability
+checkpoints: "./checkpoints/"  # Directory to save model checkpoints
+pretrained_weight: "auto"        # Path to pre-trained model weights
+debug: "enabled"               # Debug mode status (enabled/disabled)
+
+# logging and project settings
+project_name: "tsfm-multitask" # WandB project name for experiment tracking
+
+# model settings
+d_model: 32                   # Dimension of the model
+n_heads: 8                     # Number of heads in multi-head attention
+e_layers: 3                    # Number of encoder layers
+share_embedding: false         # Whether to share embedding layer
+patch_len: 16                  # Length of each patch
+stride: 16                      # Stride for patching
+prompt_num: 10                  # Number of prompts
+
+# task related settings
+# forecasting task
+inverse: false                 # Inverse the output data (used in forecasting tasks)
+
+# imputation task
+mask_rate: 0.25                # Mask ratio for imputation tasks
+
+# anomaly detection task
+anomaly_ratio: 1.0             # Prior anomaly ratio (%)
+
+# zero-shot forecasting with new length
+offset: 0                      # Offset for zero-shot forecasting
+max_offset: 0                  # Maximum offset for zero-shot forecasting
+zero_shot_forecasting_new_length: null # New length for zero-shot forecasting

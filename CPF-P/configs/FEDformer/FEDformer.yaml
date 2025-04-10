@@ -1,0 +1,65 @@
+# Basic Config
+do_train: True  # Flag to indicate whether to train the model
+task_id: test  # Identifier for the specific task or experiment
+model: FEDformer  # Model type, here it is FEDformer (a variant for time-series forecasting)
+seed: 2021  # Random seed for reproducibility
+
+# Supplementary Config for FEDformer model
+version: Fourier  # Version of FEDformer (using Fourier series)
+mode_select: random  # Mode selection strategy for the model (random or specific)
+modes: 64  # Number of modes for frequency selection
+L: 3  # Depth of the basis decomposition
+base: legendre  # Base function for decomposition (Legendre or Fourier)
+cross_activation: tanh  # Activation function for cross-module interactions (tanh in this case)
+
+# Data Loader
+data: ETTh1  # Name of the dataset used for training
+root_path: ./mindseq/data/ETT/  # Root directory where the dataset is stored
+data_path: ETTh1.csv  # Path to the CSV data file
+features: M  # Type of features ('M' for multivariate)
+target: OT  # Target variable to be predicted
+freq: h  # Frequency of the data (e.g., 'h' for hourly)
+checkpoints: ./checkpoints/  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 96  # Length of the input sequence for training
+label_len: 48  # Length of the labeled sequence (half of seq_len)
+pred_len: 96  # Length of the forecast output sequence
+
+# Model Define
+enc_in: 7  # Number of input variables for the encoder
+dec_in: 7  # Number of input variables for the decoder
+c_out: 7  # Number of output variables for forecasting
+d_model: 512  # Dimension of the model representation
+n_heads: 8  # Number of attention heads
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Dimension of the feedforward network
+moving_avg: 24  # Moving average window size for trend extraction
+factor: 1  # Factor that controls the prediction length adjustment
+distil: true  # Flag to apply distillation for model efficiency
+dropout: 0.05  # Dropout rate for regularization
+embed: timeF  # Type of embedding ('timeF' indicates time feature embedding)
+activation: gelu  # Activation function (GELU: Gaussian Error Linear Unit)
+output_attention: false  # Whether to output attention weights for interpretability
+
+# Optimization
+num_workers: 10  # Number of workers for loading the data
+itr: 1  # Number of training iterations (repeats)
+train_epochs: 10  # Number of epochs for training
+batch_size: 32  # Batch size used during training
+patience: 3  # Early stopping patience (number of epochs without improvement)
+learning_rate: 0.0001  # Learning rate for the optimizer
+des: test  # Description of the experiment
+loss: mse  # Loss function (MSE: Mean Squared Error)
+lradj: type1  # Strategy for adjusting the learning rate during training
+use_amp: false  # Flag to enable Automatic Mixed Precision (AMP) training
+inverse: false  # Whether to inverse the predicted output back to the original scale
+cols: null  # Specify columns to be used (null means using all columns)
+
+# GPU
+device: GPU  # Device type (here, using GPU)
+
+# Preprocessing & Postprocessing
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

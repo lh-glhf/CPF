@@ -1,0 +1,68 @@
+# Basic Config
+seed: 2021  # Random seed to ensure reproducibility
+do_train: 1  # Flag to indicate whether to train the model (1: train, 0: do not train)
+task_id: 'test'  # Task identifier, used to label the experiment
+model: 'Arima'  # Model type to be used, here it is ARIMA (AutoRegressive Integrated Moving Average)
+
+# Data Loader
+data: 'weather'  # Dataset name used for the experiment
+root_path: './dataset'  # Path to the dataset folder
+data_path: 'weather.csv'  # Name of the data file to be loaded
+features: 'M'  # Type of features ('M' indicates multivariate)
+target: 'OT'  # Name of the target feature/variable for prediction
+freq: 'h'  # Frequency of the data (e.g., 'h' for hourly)
+checkpoints: './checkpoints/'  # Directory to save model checkpoints
+
+# Forecasting Task
+seq_len: 10  # Length of the input sequence used for training
+label_len: 0  # Length of the labeled sequence used for guiding the forecast
+pred_len: 10  # Length of the prediction output
+
+# Model Define
+# Hidden Layer Config
+p: 0  # Order of the autoregressive (AR) component in ARIMA
+q: 0  # Order of the moving average (MA) component in ARIMA
+d: 2  # Degree of differencing for stationarity in ARIMA
+stack_types: ["generic", "generic"]  # Types of stacks used in the architecture
+nb_blocks_per_stack: 2  # Number of blocks per stack
+thetas_dim: [4, 4]  # Dimensionality of the theta parameters in each stack
+share_weights_in_stack: True  # Whether to share weights across blocks in a stack
+hidden_layer_units: 64  # Number of units in the hidden layer
+enc_in: 7  # Number of input variables for the encoder
+dec_in: 7  # Number of input variables for the decoder
+c_out: 7  # Number of output variables for forecasting
+d_model: 512  # Dimension of the model (used in Transformer-based models)
+n_heads: 8  # Number of attention heads in the Transformer encoder
+e_layers: 2  # Number of encoder layers
+d_layers: 1  # Number of decoder layers
+d_ff: 2048  # Dimension of the feedforward network
+moving_avg: 25  # Size of the moving average window for smoothing
+factor: 1  # Factor controlling the prediction length adjustment
+distil: True  # Whether to use distillation in the model for efficiency
+dropout: 0.05  # Dropout rate to prevent overfitting
+embed: 'timeF'  # Type of embedding used ('timeF' for time features)
+activation: 'gelu'  # Activation function (GELU: Gaussian Error Linear Unit)
+output_attention: False  # Whether to output the attention weights
+do_predict: True  # Flag to indicate whether to make predictions after training
+
+# Optimization
+num_workers: 10  # Number of workers for data loading
+itr: 1  # Number of iterations to run the experiment
+train_epochs: 10  # Number of training epochs
+batch_size: 32  # Batch size used for training
+patience: 3  # Early stopping patience (number of epochs without improvement)
+learning_rate: 0.0001  # Learning rate for optimization
+des: 'test'  # Description of the experiment
+loss: 'mse'  # Loss function used ('mse' for Mean Squared Error)
+lradj: 'type1'  # Learning rate adjustment strategy
+use_amp: False  # Whether to use Automatic Mixed Precision (AMP) for training
+
+# GPU
+use_gpu: True  # Flag to enable GPU usage
+gpu: 0  # GPU ID to be used for training
+use_multi_gpu: False  # Whether to use multiple GPUs
+devices: '0,1,2,3'  # List of GPU devices available for multi-GPU training
+
+
+pre_process: ['RIN', 'BN']  # List of preprocessing techniques (e.g., RIN: Reversible Instance Normalization, BN: Batch Normalization)
+post_process: ['RIN']  # List of postprocessing techniques applied after model output (e.g., RIN)

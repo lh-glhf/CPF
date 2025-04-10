@@ -1,0 +1,54 @@
+# UniTS supervised training configuration
+
+# Seed and basic configurations
+seed: 2024             # Seed for reproducibility
+task_name: "ALL_task"           # Task name
+do_train: 1                  # Training status; 1 for training mode, 0 for testing mode
+model_id: "test"                # Model ID
+model: "UniTS"                  # Model name
+
+# Data loader settings
+data: "All"                     # Dataset type
+features: "M"                   # Forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate
+target: "OT"                    # Target feature in S or MS task
+freq: "h"                       # Frequency for time feature encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly]; supports detailed frequencies like 15min or 3h
+task_data_config_path: "./configs/UniTS/multi_task_pretrain.yaml" # Path to task and data configuration YAML file
+subsample_pct: null             # Subsample percentage (optional)
+
+# Pretraining settings
+right_prob: 1.0                 # Right mask probability
+min_mask_ratio: 0.7             # Minimum right mask probability
+max_mask_ratio: 0.8             # Maximum right mask probability
+min_keep_ratio: null            # Minimum crop ratio for varying length in pretraining
+
+# Distributed Data Parallel (DDP) settings
+local-rank: null                # Local rank for distributed training
+dist_url: "env://"              # URL for setting up distributed training; see PyTorch documentation for details
+num_workers: 0                  # Number of workers for data loading
+
+# Optimization settings
+itr: 1                          # Number of experiment iterations
+train_epochs: 10                # Number of training epochs
+warmup_epochs: 0                # Number of warmup epochs
+batch_size: 32                  # Batch size of training input data
+acc_it: 128                      # Accumulated iteration to increase effective batch size
+learning_rate: 0.00005          # Learning rate for the optimizer
+min_lr: 0.0001                   # Minimum learning rate for the optimizer
+beta2: 0.999                    # Beta2 parameter for the optimizer
+weight_decay: 0.000005             # Weight decay for the optimizer
+dropout: 0.1                    # Dropout probability
+eps: 0.00000001                       # Epsilon for optimizer stability
+des: "Exp"                     # Experiment description
+debug: "enabled"                # Debug mode status (enabled/disabled)
+clip_grad: null                 # Gradient clipping threshold (default: no clipping)
+checkpoints: "./checkpoints/"   # Directory to save model checkpoints
+memory_check: true              # Enable memory check
+large_model: true               # Use large model configuration
+
+# Model settings
+d_model: 32                    # Dimension of the model
+n_heads: 8                      # Number of heads in multi-head attention
+e_layers: 3                     # Number of encoder layers
+patch_len: 16                   # Length of each patch
+stride: 16                      # Stride for patching
+prompt_num: 10                  # Number of prompts

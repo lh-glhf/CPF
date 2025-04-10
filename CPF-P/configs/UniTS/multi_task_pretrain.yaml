@@ -1,0 +1,242 @@
+task_dataset:
+
+  LTF_ECL_p96:
+    task_name: pretrain_long_term_forecast
+    dataset: ECL
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: electricity.csv
+    features: M
+    seq_len: 192
+    label_len: 48
+    pred_len: 0
+    enc_in: 321
+    dec_in: 321
+    c_out: 321
+
+  LTF_ECL_p192:
+    task_name: pretrain_long_term_forecast
+    dataset: ECL
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: electricity.csv
+    features: M
+    seq_len: 288
+    label_len: 48
+    pred_len: 0
+    enc_in: 321
+    dec_in: 321
+    c_out: 321
+
+  LTF_ECL_p336:
+    task_name: pretrain_long_term_forecast
+    dataset: ECL
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: electricity.csv
+    features: M
+    seq_len: 432
+    label_len: 48
+    pred_len: 0
+    enc_in: 321
+    dec_in: 321
+    c_out: 321
+
+  LTF_ECL_p720:
+    task_name: pretrain_long_term_forecast
+    dataset: ECL
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: electricity.csv
+    features: M
+    seq_len: 816
+    label_len: 48
+    pred_len: 0
+    enc_in: 321
+    dec_in: 321
+    c_out: 321
+
+  LTF_ETTh1_p96:
+    task_name: pretrain_long_term_forecast
+    dataset: ETTh1
+    data: ETTh1
+    embed: timeF
+    root_path: ./dataset/
+    data_path: ETTh1.csv
+    features: M
+    seq_len: 192
+    label_len: 48
+    pred_len: 0
+    enc_in: 7
+    dec_in: 7
+    c_out: 7
+
+  LTF_ETTh1_p192:
+    task_name: pretrain_long_term_forecast
+    dataset: ETTh1
+    data: ETTh1
+    embed: timeF
+    root_path: ./dataset/
+    data_path: ETTh1.csv
+    features: M
+    seq_len: 288
+    label_len: 48
+    pred_len: 0
+    enc_in: 7
+    dec_in: 7
+    c_out: 7
+
+  LTF_ETTh1_p336:
+    task_name: pretrain_long_term_forecast
+    dataset: ETTh1
+    data: ETTh1
+    embed: timeF
+    root_path: ./dataset/
+    data_path: ETTh1.csv
+    features: M
+    seq_len: 432
+    label_len: 48
+    pred_len: 0
+    enc_in: 7
+    dec_in: 7
+    c_out: 7
+
+  LTF_ETTh1_p720:
+    task_name: pretrain_long_term_forecast
+    dataset: ETTh1
+    data: ETTh1
+    embed: timeF
+    root_path: ./dataset/
+    data_path: ETTh1.csv
+    features: M
+    seq_len: 816    
+    label_len: 48
+    pred_len: 0
+    enc_in: 7
+    dec_in: 7
+    c_out: 7
+
+
+  LTF_Traffic_p96:
+    task_name: pretrain_long_term_forecast
+    dataset: Traffic
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: traffic.csv
+    features: M
+    seq_len: 192
+    label_len: 48
+    pred_len: 0
+    enc_in: 862
+    dec_in: 862
+    c_out: 862
+
+  LTF_Traffic_p192:
+    task_name: pretrain_long_term_forecast
+    dataset: Traffic
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: traffic.csv
+    features: M
+    seq_len: 288
+    label_len: 48
+    pred_len: 0
+    enc_in: 862
+    dec_in: 862
+    c_out: 862
+  
+  LTF_Traffic_p336:
+    task_name: pretrain_long_term_forecast
+    dataset: Traffic
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: traffic.csv
+    features: M
+    seq_len: 432
+    label_len: 48
+    pred_len: 0
+    enc_in: 862
+    dec_in: 862
+    c_out: 862
+
+  LTF_Traffic_p720:
+    task_name: pretrain_long_term_forecast
+    dataset: Traffic
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: traffic.csv
+    features: M
+    seq_len: 816
+    label_len: 48
+    pred_len: 0
+    enc_in: 862
+    dec_in: 862
+    c_out: 862
+  
+  LTF_Weather_p96:
+    task_name: pretrain_long_term_forecast
+    dataset: Weather
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: weather.csv
+    features: M
+    seq_len: 192
+    label_len: 48
+    pred_len: 0
+    enc_in: 21
+    dec_in: 21
+    c_out: 21
+
+  LTF_Weather_p192:
+    task_name: pretrain_long_term_forecast
+    dataset: Weather
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: weather.csv
+    features: M
+    seq_len: 288
+    label_len: 48
+    pred_len: 0
+    enc_in: 21
+    dec_in: 21
+    c_out: 21
+
+  LTF_Weather_p336:
+    task_name: pretrain_long_term_forecast
+    dataset: Weather
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: weather.csv
+    features: M
+    seq_len: 432
+    label_len: 48
+    pred_len: 0
+    enc_in: 21
+    dec_in: 21
+    c_out: 21
+
+  LTF_Weather_p720:
+    task_name: pretrain_long_term_forecast
+    dataset: Weather
+    data: custom
+    embed: timeF
+    root_path: ./dataset/
+    data_path: weather.csv
+    features: M
+    seq_len: 816
+    label_len: 48
+    pred_len: 0
+    enc_in: 21
+    dec_in: 21
+    c_out: 21
